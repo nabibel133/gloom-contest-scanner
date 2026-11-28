@@ -79,7 +79,12 @@ lector = new Html5Qrcode("lector");
         camara.id,
           { fps: 10 },
           function(texto) {
-            resultado.textContent = "QR detectado: " + texto;
+          lector.pause();
+resultado.textContent = "Verificando: " + texto;
+
+window.location.href =
+  "https://script.google.com/macros/s/AKfycbwtQfo1oVyfKJEfQbUXVmGv-b8cR85FQz8b0wveDcPBtJQoy1dCEAG7EzAJ7AJEgdX-hA/exec?codigo="
+  + encodeURIComponent(texto);
           },
           function() {}
         );
