@@ -61,10 +61,22 @@
       try {
         resultado.textContent = "Iniciando cámara...";
 
-        lector = new Html5Qrcode("lector");
+        const camaras = await Html5Qrcode.getCameras();
+
+const opcion = prompt(
+  camaras.map((c, i) => i + ": " + c.label).join("\n"),
+  "0"
+);
+
+if (opcion === null) return;
+
+const camara = camaras[Number(opcion)];
+if (!camara) throw new Error("Cámara inválida");
+
+lector = new Html5Qrcode("lector");
 
         await lector.start(
-          { facingMode: "environment" },
+        camara.id,
           { fps: 10 },
           function(texto) {
             resultado.textContent = "QR detectado: " + texto;
